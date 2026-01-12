@@ -1,0 +1,5 @@
+streamlit
+google-generativeai
+easyocr
+pillow
+numpy
