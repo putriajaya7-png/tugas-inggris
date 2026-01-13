@@ -4,56 +4,48 @@ import easyocr
 from PIL import Image
 import numpy as np
 
-# --- 1. KONFIGURASI API ---
+# --- 1. SETUP API ---
 try:
-    # Memanggil kunci dari menu Secrets
-    KUNCI_API = st.secrets["GEMINI_API_KEY"]
-    genai.configure(api_key=KUNCI_API)
-    model_ai = genai.GenerativeModel('gemini-1.5-flash')
+    kunci = st.secrets["GEMINI_API_KEY"]
+    genai.configure(api_key=kunci)
+    # Kita pakai gemini-pro agar lebih stabil dan tidak 404
+    model = genai.GenerativeModel('gemini-pro')
 except Exception as e:
-    st.error(f"Kunci API tidak terbaca! Periksa menu Secrets. Error: {e}")
+    st.error(f"Gagal baca Secrets: {e}")
     st.stop()
 
-# Fungsi untuk membaca teks dari gambar
+# --- 2. SETUP OCR ---
 @st.cache_resource
 def load_reader():
     return easyocr.Reader(['en'])
 reader = load_reader()
 
-# --- 2. TAMPILAN APLIKASI ---
-st.set_page_config(page_title="English Expert Solver", layout="centered")
+# --- 3. TAMPILAN ---
 st.title("🎓 English Expert Solver")
-st.write("Aplikasi sudah diperbaiki. Silakan masukkan soal!")
-
-# Sidebar untuk pilihan jenjang
 level = st.sidebar.selectbox("Pilih Jenjang:", ["TK", "SD", "SMP", "SMA", "S1", "S2"])
-metode = st.radio("Pilih Cara Bertanya:", ["Ketik Teks", "Upload Foto Soal"])
+cara = st.radio("Metode:", ["Ketik Teks", "Upload Foto Soal"])
 
-soal_siap = ""
-
-if metode == "Ketik Teks":
-    soal_siap = st.text_area("Masukkan soal kamu di sini...")
+soal_teks = ""
+if cara == "Ketik Teks":
+    soal_teks = st.text_area("Masukkan soal kamu di sini...")
 else:
-    file_gambar = st.file_uploader("Pilih foto soal (JPG/PNG)", type=['jpg', 'jpeg', 'png'])
-    if file_gambar:
-        img = Image.open(file_gambar)
-        st.image(img, caption="Foto Soal", width=350)
-        with st.spinner("Sedang membaca tulisan di foto..."):
-            hasil_ocr = reader.readtext(np.array(img), detail=0)
-            soal_siap = " ".join(hasil_ocr)
-            st.info(f"Teks yang terbaca: {soal_siap}")
+    file = st.file_uploader("Pilih foto soal", type=['jpg', 'png', 'jpeg'])
+    if file:
+        img = Image.open(file)
+        st.image(img, width=300)
+        with st.spinner("Membaca foto..."):
+            hasil = reader.readtext(np.array(img), detail=0)
+            soal_teks = " ".join(hasil)
 
-# --- 3. PROSES JAWABAN AI ---
+# --- 4. TOMBOL JAWAB ---
 if st.button("Dapatkan Jawaban ✨"):
-    if soal_siap:
-        with st.spinner("AI sedang merumuskan jawaban..."):
+    if soal_teks:
+        with st.spinner("Sedang berpikir..."):
             try:
-                prompt = f"Anda adalah guru Bahasa Inggris pakar. Jawablah soal tingkat {level} ini dengan penjelasan: {soal_siap}"
-                respon = model_ai.generate_content(prompt)
-                st.markdown("---")
+                respon = model.generate_content(f"Jawab soal {level} ini: {soal_teks}")
                 st.success(f"### Jawaban ({level}):")
                 st.write(respon.text)
             except Exception as e:
-                st.error(f"Google bilang: {e}")
+                st.error(f"Pesan Google: {e}")
     else:
-        st.warning("Silakan ketik soal atau unggah foto dulu ya!")
+        st.warning("Isi soal dulu ya!")
