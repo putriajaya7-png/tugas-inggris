@@ -24,7 +24,7 @@ def generate_with_retry(prompt, image=None):
     for kunci in kunci_acak:
         try:
             genai.configure(api_key=kunci)
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-1.5-flash-latest')
             
             if image:
                 response = model.generate_content([prompt, image])
