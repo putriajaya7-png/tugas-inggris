@@ -25,7 +25,7 @@ def generate_with_retry(prompt, image=None):
             
             if image:
                 response = client.models.generate_content(
-                    model='gemini-2.5-flash',
+                    model = genai.GenerativeModel('gemini-3.6-flash')
                     contents=[prompt, image]
                 )
             else:
