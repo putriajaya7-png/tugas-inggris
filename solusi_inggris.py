@@ -1,18 +1,19 @@
 import streamlit as st
-from google import genai
+import google.generativeai as genai
 from PIL import Image
 import random
 
 # --- KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="English AI Solver", layout="centered")
 
-# --- FUNGSI SMART GENERATE (ANTI-LIMIT) ---
+# --- FUNGSI SMART GENERATE (ANTI-LIMIT & ANTI-ERROR) ---
 def generate_with_retry(prompt, image=None):
     if "GEMINI_KEYS" not in st.secrets:
         return "❌ Error: 'GEMINI_KEYS' belum dipasang atau belum tersimpan di menu Secrets Streamlit Cloud!"
         
     daftar_kunci = st.secrets["GEMINI_KEYS"]
     
+    # Memastikan format API Keys berupa list
     if isinstance(daftar_kunci, str):
         kunci_acak = [daftar_kunci]
     else:
@@ -21,22 +22,20 @@ def generate_with_retry(prompt, image=None):
 
     for kunci in kunci_acak:
         try:
-            client = genai.Client(api_key=kunci)
+            genai.configure(api_key=kunci)
+            
+            # Pakai model resmi terbaru yang disarankan API (gemini-3.6-flash)
+            model = genai.GenerativeModel('gemini-3.6-flash')
             
             if image:
-                response = client.models.generate_content(
-                    model = genai.GenerativeModel('gemini-3.6-flash')
-                    contents=[prompt, image]
-                )
+                response = model.generate_content([prompt, image])
             else:
-                response = client.models.generate_content(
-                    model='gemini-2.5-flash',
-                    contents=prompt
-                )
+                response = model.generate_content(prompt)
             
             return response.text
             
         except Exception as e:
+            # Jika kuota habis/limit (error 429), ganti ke API Key berikutnya
             if "429" in str(e):
                 continue
             else:
@@ -57,7 +56,7 @@ if metode == "Ketik Teks":
     if st.button("Dapatkan Jawaban ✨"):
         if soal_teks:
             with st.spinner("Sedang mencari jawaban terbaik..."):
-                hasil = generate_with_retry(f"Jawab soal {level} ini: {soal_teks}")
+                hasil = generate_with_retry(f"Jawab dan jelaskan soal Bahasa Inggris tingkat {level} ini: {soal_teks}")
                 st.success("### Jawaban:")
                 st.write(hasil)
         else:
