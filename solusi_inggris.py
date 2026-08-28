@@ -1,5 +1,5 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai
 from PIL import Image
 import random
 
@@ -8,13 +8,11 @@ st.set_page_config(page_title="English AI Solver", layout="centered")
 
 # --- FUNGSI SMART GENERATE (ANTI-LIMIT) ---
 def generate_with_retry(prompt, image=None):
-    # Cek apakah GEMINI_KEYS ada di st.secrets agar tidak KeyError
     if "GEMINI_KEYS" not in st.secrets:
         return "❌ Error: 'GEMINI_KEYS' belum dipasang atau belum tersimpan di menu Secrets Streamlit Cloud!"
         
     daftar_kunci = st.secrets["GEMINI_KEYS"]
     
-    # Jika Secrets diisi 1 string kunci biasa, ubah jadi list otomatis
     if isinstance(daftar_kunci, str):
         kunci_acak = [daftar_kunci]
     else:
@@ -23,22 +21,25 @@ def generate_with_retry(prompt, image=None):
 
     for kunci in kunci_acak:
         try:
-            genai.configure(api_key=kunci)
-            model = genai.GenerativeModel('gemini-pro')
+            client = genai.Client(api_key=kunci)
             
             if image:
-                response = model.generate_content([prompt, image])
+                response = client.models.generate_content(
+                    model='gemini-2.5-flash',
+                    contents=[prompt, image]
+                )
             else:
-                response = model.generate_content(prompt)
+                response = client.models.generate_content(
+                    model='gemini-2.5-flash',
+                    contents=prompt
+                )
             
-            return response.text # Berhasil! Kembalikan teks
+            return response.text
             
         except Exception as e:
             if "429" in str(e):
-                # Jika limit habis, lanjut ke kunci berikutnya
                 continue
             else:
-                # Jika error lain (misal koneksi), tampilkan errornya
                 return f"Terjadi kesalahan teknis: {e}"
     
     return "❌ Waduh, semua API Key sedang limit! Coba lagi dalam 1 menit ya."
