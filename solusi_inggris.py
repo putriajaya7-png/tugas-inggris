@@ -8,12 +8,18 @@ st.set_page_config(page_title="English AI Solver", layout="centered")
 
 # --- FUNGSI SMART GENERATE (ANTI-LIMIT) ---
 def generate_with_retry(prompt, image=None):
-    # Ambil daftar kunci dari secrets
+    # Cek apakah GEMINI_KEYS ada di st.secrets agar tidak KeyError
+    if "GEMINI_KEYS" not in st.secrets:
+        return "❌ Error: 'GEMINI_KEYS' belum dipasang atau belum tersimpan di menu Secrets Streamlit Cloud!"
+        
     daftar_kunci = st.secrets["GEMINI_KEYS"]
     
-    # Acak urutan kunci agar beban terbagi rata
-    kunci_acak = list(daftar_kunci)
-    random.shuffle(kunci_acak)
+    # Jika Secrets diisi 1 string kunci biasa, ubah jadi list otomatis
+    if isinstance(daftar_kunci, str):
+        kunci_acak = [daftar_kunci]
+    else:
+        kunci_acak = list(daftar_kunci)
+        random.shuffle(kunci_acak)
 
     for kunci in kunci_acak:
         try:
@@ -70,4 +76,3 @@ else:
                 st.markdown("---")
                 st.success("### Hasil Analisis & Jawaban:")
                 st.write(hasil)
-                                                            
