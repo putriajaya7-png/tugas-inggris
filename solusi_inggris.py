@@ -3,7 +3,6 @@ import google.generativeai as genai
 from PIL import Image
 import random
 
-# --- KONFIGURASI HALAMAN UTAMA ---
 st.set_page_config(
     page_title="NEURAL ENGLISH AI - HYPER CYBER EDITION",
     page_icon="⚡",
@@ -47,10 +46,10 @@ st.markdown("""
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
         background-image: 
-            linear-gradient(rgba(255, 0, 85, 0.06) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(157, 78, 221, 0.06) 1px, transparent 1px),
-            radial-gradient(circle at 20% 30%, rgba(255, 0, 60, 0.15) 0%, transparent 40%),
-            radial-gradient(circle at 80% 70%, rgba(123, 44, 191, 0.2) 0%, transparent 40%);
+            linear-gradient(rgba(255, 0, 85, 0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(157, 78, 221, 0.08) 1px, transparent 1px),
+            radial-gradient(circle at 20% 30%, rgba(255, 0, 60, 0.18) 0%, transparent 40%),
+            radial-gradient(circle at 80% 70%, rgba(123, 44, 191, 0.25) 0%, transparent 40%);
         background-size: 36px 36px, 36px 36px, 100% 100%, 100% 100%;
         pointer-events: none;
         z-index: 0;
@@ -76,64 +75,80 @@ st.markdown("""
         color: #f1f5f9 !important;
     }
 
-    /* --- CYBER HEADER HUD CONTAINER (EFEK KACA / GLASSMORPHISM) --- */
+    /* --- EXTREME FROSTED GLASS HUD CONTAINER (SUPER GLASSMORPHISM REALISTIS) --- */
     .hud-title-container {
         text-align: center;
-        padding: 16px 20px;
-        margin: 0 auto 24px auto;
+        padding: 20px 24px;
+        margin: 0 auto 28px auto;
         max-width: 580px;
         
-        /* EFEK KACA UTAMA: Transparan namun membias */
-        background: rgba(15, 23, 42, 0.25); 
+        /* BACKGROUND KACA TEMBUS PANDANG EXTREME */
+        background: linear-gradient(
+            135deg, 
+            rgba(255, 255, 255, 0.12) 0%, 
+            rgba(15, 23, 42, 0.2) 40%, 
+            rgba(123, 44, 191, 0.08) 100%
+        ); 
         
-        /* EFEK BLUR KACA: Sangat kuat */
-        backdrop-filter: blur(28px) saturate(180%);
-        -webkit-backdrop-filter: blur(28px) saturate(180%);
+        /* ULTRA HEAVY BLUR (BLUR KACA FROSTED SUPER TEBAL) */
+        backdrop-filter: blur(45px) saturate(220%);
+        -webkit-backdrop-filter: blur(45px) saturate(220%);
         
-        /* BORDER PANTULAN CAHAYA: Putih transparan di atas dan kiri seperti kaca asli */
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-top: 1.5px solid rgba(255, 255, 255, 0.25);
-        border-left: 1.5px solid rgba(255, 255, 255, 0.25);
+        /* BORDER KILAP SPESULAR KACA SANGAT TAJAM */
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-top: 2px solid rgba(255, 255, 255, 0.45);
+        border-left: 2px solid rgba(255, 255, 255, 0.35);
+        border-right: 1px solid rgba(255, 255, 255, 0.15);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         
-        /* BENTUK KOTAK: Membulat (Rounded) */
+        /* SUDUT KOTAK MEMBULAT HIGH-TECH */
         border-radius: 32px;
         
-        /* BAYANGAN (SHADOW): Hitam pekat di bawah, glow cyber di luar, pantulan kaca di dalam */
+        /* KILAUAN DALAM & BAYANGAN LUAR KACA MULTI-LAYER */
         box-shadow: 
-            0 25px 45px rgba(0, 0, 0, 0.6),
-            0 0 30px rgba(255, 0, 85, 0.25),
-            0 0 45px rgba(123, 44, 191, 0.25),
-            inset 0 0 20px rgba(255, 255, 255, 0.05);
+            0 30px 60px rgba(0, 0, 0, 0.75),
+            0 0 35px rgba(255, 0, 85, 0.3),
+            0 0 50px rgba(123, 44, 191, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.4),
+            inset 0 -2px 6px rgba(0, 0, 0, 0.6),
+            inset 0 0 30px rgba(255, 255, 255, 0.08);
             
         position: relative;
         overflow: hidden;
     }
 
-    /* Laser Scanline Top & Bottom Animation */
+    /* LAPISAN KILAPAN ANGLED GLASS SHEEN (EFEK PANTULAN CAHAYA KACA) */
     .hud-title-container::before {
         content: "";
         position: absolute;
-        top: 0; left: -100%; width: 100%; height: 3px;
-        background: linear-gradient(90deg, transparent, var(--red-neon), var(--purple-neon), transparent);
-        animation: scanline 3.5s linear infinite;
+        top: -50%; left: -50%;
+        width: 200%; height: 200%;
+        background: linear-gradient(
+            45deg,
+            transparent 0%,
+            transparent 42%,
+            rgba(255, 255, 255, 0.15) 48%,
+            rgba(255, 255, 255, 0.28) 50%,
+            rgba(255, 255, 255, 0.15) 52%,
+            transparent 58%,
+            transparent 100%
+        );
+        pointer-events: none;
+        transform: rotate(25deg);
     }
 
+    /* Laser Scanline Top & Bottom Animation */
     .hud-title-container::after {
         content: "";
         position: absolute;
-        bottom: 0; right: -100%; width: 100%; height: 2px;
-        background: linear-gradient(90deg, transparent, var(--purple-neon), var(--red-crimson), transparent);
-        animation: scanlineReverse 3.5s linear infinite;
+        bottom: 0; left: -100%; width: 100%; height: 2px;
+        background: linear-gradient(90deg, transparent, var(--purple-neon), var(--red-neon), transparent);
+        animation: scanline 3.5s linear infinite;
     }
 
     @keyframes scanline {
         0% { left: -100%; }
         100% { left: 100%; }
-    }
-
-    @keyframes scanlineReverse {
-        0% { right: -100%; }
-        100% { right: 100%; }
     }
 
     .cyber-glitch-title {
@@ -147,6 +162,8 @@ st.markdown("""
         text-shadow: 0 0 30px var(--red-glow), 0 0 45px var(--purple-glow);
         margin: 6px 0;
         text-transform: uppercase;
+        position: relative;
+        z-index: 1;
     }
 
     .cyber-sub {
@@ -155,6 +172,8 @@ st.markdown("""
         font-size: 0.85rem;
         letter-spacing: 1.5px;
         text-transform: uppercase;
+        position: relative;
+        z-index: 1;
     }
 
     /* --- STATUS BADGES & LIVE HUD STATS --- */
@@ -163,8 +182,9 @@ st.markdown("""
         align-items: center;
         gap: 10px;
         padding: 6px 18px;
-        background: linear-gradient(90deg, rgba(255, 0, 85, 0.15), rgba(123, 44, 191, 0.2));
-        border: 1px solid var(--purple-neon);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(15px);
         border-radius: 50px;
         color: #f3e8ff;
         font-family: 'Rajdhani', sans-serif;
@@ -172,8 +192,10 @@ st.markdown("""
         font-weight: 700;
         letter-spacing: 2px;
         text-transform: uppercase;
-        box-shadow: 0 0 20px var(--purple-glow);
+        box-shadow: 0 0 20px var(--purple-glow), inset 0 1px 2px rgba(255, 255, 255, 0.3);
         margin-bottom: 8px;
+        position: relative;
+        z-index: 1;
     }
 
     .status-dot {
@@ -195,10 +217,12 @@ st.markdown("""
         justify-content: space-around;
         margin-top: 15px;
         padding-top: 12px;
-        border-top: 1px solid rgba(157, 78, 221, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
         font-family: 'JetBrains Mono', monospace;
         font-size: 0.72rem;
         color: #a7f3d0;
+        position: relative;
+        z-index: 1;
     }
 
     .hud-stat-item {
@@ -360,7 +384,7 @@ def generate_with_retry(prompt, image=None):
     
     return "❌ Waduh, semua API Key sedang limit! Coba lagi dalam 1 menit ya."
 
-# --- HEADER HUD LAYOUT ---
+# --- HEADER HUD LAYOUT WITH MAXIMUM FROSTED GLASS ---
 st.markdown("""
 <div class="hud-title-container">
     <div class="status-badge">
