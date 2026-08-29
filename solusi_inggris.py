@@ -4,7 +4,7 @@ from PIL import Image
 import random
 
 st.set_page_config(
-    page_title="NEURAL ENGLISH AI - HYPER CYBER EDITION",
+    page_title="BRAIN SOLVER BY AMALIA - HYPER CYBER EDITION",
     page_icon="⚡",
     layout="centered",
     initial_sidebar_state="expanded"
@@ -350,7 +350,7 @@ st.markdown("""
     <div class="status-badge">
         <span class="status-dot"></span> NEURAL ENGINE 3.6 FLASH • QUANTUM ACTIVE
     </div>
-    <div class="cyber-glitch-title">ENGLISH EXPERT AI</div>
+    <div class="cyber-glitch-title">BRAIN SOLVER</div>
     <div class="cyber-sub">SOLUSI CERDAS & ANALISIS TUGAS</div>
     <div class="hud-stats-bar">
         <span class="hud-stat-item">PALETTE: <span class="hud-stat-val">RED • NAVY • PURPLE • OBSIDIAN</span></span>
@@ -378,11 +378,11 @@ metode = st.radio("Pilih Metode Input Soal:", ["Ketik Teks", "Upload Foto Soal"]
 
 
 if metode == "Ketik Teks":
-    soal_teks = st.text_area("Masukkan Soal Bahasa Inggris:", placeholder="Ketik soal atau kalimat di sini...", height=150)
+    soal_teks = st.text_area("Masukkan Soal:", placeholder="Ketik soal atau kalimat di sini...", height=150)
     if st.button("Dapatkan Jawaban ✨"):
         if soal_teks:
             with st.spinner("⚡ NEURAL AI sedang menganalisis & memproses jawaban..."):
-                hasil = generate_with_retry(f"Jawab dan jelaskan soal Bahasa Inggris tingkat {level} ini: {soal_teks}")
+                hasil = generate_with_retry(f"Jawab dan jelaskan soal  {level} ini: {soal_teks}")
                 st.markdown("---")
                 st.success("### 💡 HASIL ANALISIS & JAWABAN:")
                 st.write(hasil)
