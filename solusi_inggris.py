@@ -409,7 +409,7 @@ st.sidebar.markdown("""
 metode = st.radio("Pilih Metode Input Soal:", ["Ketik Teks", "Upload Foto Soal"])
 
 if metode == "Ketik Teks":
-    soal_teks = st.text_area("Masukkan Soal Bahasa:", placeholder="Ketik soal atau kalimat di sini...", height=150)
+    soal_teks = st.text_area("Masukkan Soal:", placeholder="Ketik soal atau kalimat di sini...", height=150)
     if st.button("Dapatkan Jawaban ✨"):
         if soal_teks:
             with st.spinner("⚡ NEURAL AI sedang menganalisis & memproses jawaban..."):
