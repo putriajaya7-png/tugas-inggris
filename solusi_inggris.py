@@ -29,7 +29,6 @@ st.markdown("""
         --text-pure: #ffffff;
         --text-dim: #94a3b8;
         --glass-bg: rgba(6, 11, 30, 0.75);
-        --glass-border: linear-gradient(135deg, rgba(255,0,85,0.6), rgba(157,78,221,0.6));
     }
 
     /* --- GLOBAL ANIMATED BACKGROUND --- */
@@ -75,42 +74,42 @@ st.markdown("""
         color: #f1f5f9 !important;
     }
 
-    /* --- FROSTED GLASS HUD CONTAINER (LEBIH RINGKAS & TANPA GARIS POTONG) --- */
+    /* --- REALISTIC FROSTED GLASS HUD CONTAINER (SEDIKIT DIBESARKAN & JARAK DIRENGGANGKAN) --- */
     .hud-title-container {
         text-align: center;
-        padding: 14px 20px;
-        margin: 0 auto 20px auto;
-        max-width: 480px;
+        padding: 22px 28px;
+        margin: 15px auto 40px auto; /* Memberikan ruang napas vertikal agar tidak rapat */
+        max-width: 550px; /* Ukuran pas sedikit lebih besar dari sebelumnya */
         
-        /* BACKGROUND KACA TEMBUS PANDANG PEKAT */
+        /* ULTRA REALISTIC FROSTED GLASS EFFECT */
         background: linear-gradient(
             135deg, 
-            rgba(255, 255, 255, 0.09) 0%, 
-            rgba(15, 23, 42, 0.25) 40%, 
-            rgba(123, 44, 191, 0.08) 100%
+            rgba(255, 255, 255, 0.14) 0%, 
+            rgba(15, 23, 42, 0.55) 45%, 
+            rgba(123, 44, 191, 0.18) 100%
         ); 
         
-        /* ULTRA HEAVY BLUR */
-        backdrop-filter: blur(45px) saturate(220%);
-        -webkit-backdrop-filter: blur(45px) saturate(220%);
+        /* MAXIMUM BACKDROP BLUR & SATURATION */
+        backdrop-filter: blur(40px) saturate(230%);
+        -webkit-backdrop-filter: blur(40px) saturate(230%);
         
-        /* BORDER KILAP SPESULAR KACA HALUS */
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-top: 1.5px solid rgba(255, 255, 255, 0.4);
-        border-left: 1.5px solid rgba(255, 255, 255, 0.3);
-        border-right: 1px solid rgba(255, 255, 255, 0.12);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        /* REAL GLASS SPECULAR HIGHLIGHT BORDERS (TEPI KACA KILAP) */
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-top: 1.8px solid rgba(255, 255, 255, 0.55);
+        border-left: 1.8px solid rgba(255, 255, 255, 0.4);
+        border-right: 1px solid rgba(255, 255, 255, 0.15);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         
-        /* SUDUT KOTAK MEMBULAT PROPORSIONAL */
-        border-radius: 24px;
+        /* SMOOTH ROUNDED CORNERS */
+        border-radius: 28px;
         
-        /* KILAUAN DALAM & BAYANGAN LUAR KACA MULTI-LAYER */
+        /* MULTI-LAYER SHADOW & INSET GLASS GLOW */
         box-shadow: 
-            0 20px 45px rgba(0, 0, 0, 0.7),
-            0 0 25px rgba(255, 0, 85, 0.25),
-            0 0 35px rgba(123, 44, 191, 0.25),
-            inset 0 1px 3px rgba(255, 255, 255, 0.35),
-            inset 0 -1px 4px rgba(0, 0, 0, 0.5);
+            0 25px 55px rgba(0, 0, 0, 0.75),
+            0 0 30px rgba(255, 0, 85, 0.2),
+            0 0 40px rgba(123, 44, 191, 0.25),
+            inset 0 1px 2px rgba(255, 255, 255, 0.5),
+            inset 0 -2px 6px rgba(0, 0, 0, 0.6);
             
         position: relative;
         overflow: hidden;
@@ -132,14 +131,14 @@ st.markdown("""
 
     .cyber-glitch-title {
         font-family: 'Orbitron', sans-serif;
-        font-size: 1.75rem;
+        font-size: 1.95rem;
         font-weight: 900;
-        letter-spacing: 2.5px;
+        letter-spacing: 3px;
         background: linear-gradient(135deg, #ffffff 0%, #ff80a0 25%, #d880ff 60%, #ff0055 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-shadow: 0 0 25px var(--red-glow), 0 0 35px var(--purple-glow);
-        margin: 4px 0;
+        margin: 6px 0;
         text-transform: uppercase;
         position: relative;
         z-index: 1;
@@ -148,8 +147,8 @@ st.markdown("""
     .cyber-sub {
         font-family: 'JetBrains Mono', monospace;
         color: #cbd5e1;
-        font-size: 0.78rem;
-        letter-spacing: 1.2px;
+        font-size: 0.82rem;
+        letter-spacing: 1.4px;
         text-transform: uppercase;
         position: relative;
         z-index: 1;
@@ -160,19 +159,19 @@ st.markdown("""
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 4px 14px;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.22);
+        padding: 5px 16px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.28);
         backdrop-filter: blur(15px);
         border-radius: 50px;
         color: #f3e8ff;
         font-family: 'Rajdhani', sans-serif;
-        font-size: 0.8rem;
+        font-size: 0.82rem;
         font-weight: 700;
         letter-spacing: 1.5px;
         text-transform: uppercase;
-        box-shadow: 0 0 15px var(--purple-glow), inset 0 1px 2px rgba(255, 255, 255, 0.3);
-        margin-bottom: 6px;
+        box-shadow: 0 0 15px var(--purple-glow), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+        margin-bottom: 8px;
         position: relative;
         z-index: 1;
     }
@@ -194,11 +193,11 @@ st.markdown("""
     .hud-stats-bar {
         display: flex;
         justify-content: space-around;
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
         font-family: 'JetBrains Mono', monospace;
-        font-size: 0.68rem;
+        font-size: 0.72rem;
         color: #a7f3d0;
         position: relative;
         z-index: 1;
@@ -211,6 +210,17 @@ st.markdown("""
     .hud-stat-val {
         color: #ff0055;
         font-weight: bold;
+    }
+
+    /* --- LAYOUT SPACING & MARGIN FIXES (MENGATASI KONDISI TERLALU DEKAT) --- */
+    .stRadio {
+        margin-top: 15px !important;
+        margin-bottom: 25px !important;
+    }
+
+    .stTextArea, [data-testid="stFileUploader"] {
+        margin-top: 15px !important;
+        margin-bottom: 30px !important;
     }
 
     /* --- INPUT CONTROLS (TEXT AREA & INPUTS) --- */
@@ -255,6 +265,11 @@ st.markdown("""
     }
 
     /* --- ULTRA HIGH-TECH CYBER BUTTON --- */
+    .stButton {
+        margin-top: 20px !important;
+        margin-bottom: 25px !important;
+    }
+
     .stButton > button {
         width: 100%;
         background: linear-gradient(135deg, #ff0055 0%, #9d4edd 50%, #060b1e 100%) !important;
@@ -296,6 +311,7 @@ st.markdown("""
         backdrop-filter: blur(25px);
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px var(--red-glow), 0 0 25px var(--purple-glow);
         padding: 28px !important;
+        margin-top: 25px !important;
     }
 
     .stWarning {
@@ -304,6 +320,7 @@ st.markdown("""
         border-left: 6px solid var(--red-neon) !important;
         color: #ffe4e6 !important;
         border-radius: 14px !important;
+        margin-top: 20px !important;
     }
 
     /* FILE UPLOADER CYBER BOX */
@@ -363,7 +380,6 @@ def generate_with_retry(prompt, image=None):
     
     return "❌ Waduh, semua API Key sedang limit! Coba lagi dalam 1 menit ya."
 
-# --- HEADER HUD LAYOUT WITH MAXIMUM FROSTED GLASS ---
 st.markdown("""
 <div class="hud-title-container">
     <div class="status-badge">
@@ -379,7 +395,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# --- SIDEBAR STYLING & CONFIG ---
 st.sidebar.markdown("### 🎛️ AI CONTROL CENTER")
 level = st.sidebar.selectbox("Pilih Jenjang Sekolah:", ["SD", "SMP", "SMA", "Kuliah"])
 
