@@ -3,8 +3,9 @@ import google.generativeai as genai
 from PIL import Image
 import random
 
+# --- KONFIGURASI HALAMAN UTAMA ---
 st.set_page_config(
-    page_title="BRAIN SOLVER BY AMALIA - HYPER CYBER EDITION",
+    page_title="NEURAL ENGLISH AI - HYPER CYBER EDITION",
     page_icon="⚡",
     layout="centered",
     initial_sidebar_state="expanded"
@@ -78,12 +79,12 @@ st.markdown("""
     /* --- CYBER HEADER HUD CONTAINER --- */
     .hud-title-container {
         text-align: center;
-        padding: 28px 20px;
-        margin-bottom: 32px;
+        padding: 16px 20px;
+        margin: 0 auto 24px auto;
+        max-width: 580px;
         background: linear-gradient(135deg, rgba(12, 0, 25, 0.85) 0%, rgba(6, 11, 30, 0.9) 50%, rgba(25, 0, 15, 0.85) 100%);
-        border: 1px solid transparent;
-        border-image: linear-gradient(135deg, var(--red-crimson), var(--purple-neon), var(--red-neon)) 1;
-        border-radius: 22px;
+        border: 1.5px solid rgba(255, 0, 85, 0.5);
+        border-radius: 32px;
         backdrop-filter: blur(20px);
         box-shadow: 
             0 10px 40px rgba(0, 0, 0, 0.8),
@@ -123,14 +124,14 @@ st.markdown("""
 
     .cyber-glitch-title {
         font-family: 'Orbitron', sans-serif;
-        font-size: 2.7rem;
+        font-size: 2.2rem;
         font-weight: 900;
         letter-spacing: 3px;
         background: linear-gradient(135deg, #ffffff 0%, #ff80a0 25%, #d880ff 60%, #ff0055 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-shadow: 0 0 30px var(--red-glow), 0 0 45px var(--purple-glow);
-        margin: 8px 0;
+        margin: 6px 0;
         text-transform: uppercase;
     }
 
@@ -315,6 +316,7 @@ def generate_with_retry(prompt, image=None):
         
     daftar_kunci = st.secrets["GEMINI_KEYS"]
     
+    # Memastikan format API Keys berupa list
     if isinstance(daftar_kunci, str):
         kunci_acak = [daftar_kunci]
     else:
@@ -325,7 +327,7 @@ def generate_with_retry(prompt, image=None):
         try:
             genai.configure(api_key=kunci)
             
-            
+            # Model resmi rekomendasi Google Gemini terbaru
             model = genai.GenerativeModel('gemini-3.6-flash')
             
             if image:
@@ -336,7 +338,7 @@ def generate_with_retry(prompt, image=None):
             return response.text
             
         except Exception as e:
-            
+            # Jika kuota habis/limit (error 429), ganti ke API Key berikutnya
             if "429" in str(e):
                 continue
             else:
@@ -344,7 +346,7 @@ def generate_with_retry(prompt, image=None):
     
     return "❌ Waduh, semua API Key sedang limit! Coba lagi dalam 1 menit ya."
 
-
+# --- HEADER HUD LAYOUT ---
 st.markdown("""
 <div class="hud-title-container">
     <div class="status-badge">
@@ -360,6 +362,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+# --- SIDEBAR STYLING & CONFIG ---
 st.sidebar.markdown("### 🎛️ AI CONTROL CENTER")
 level = st.sidebar.selectbox("Pilih Jenjang Sekolah:", ["SD", "SMP", "SMA", "Kuliah"])
 
@@ -376,13 +379,13 @@ st.sidebar.markdown("""
 
 metode = st.radio("Pilih Metode Input Soal:", ["Ketik Teks", "Upload Foto Soal"])
 
-
+# --- LOGIKA JAWABAN & INTERAKSI USER ---
 if metode == "Ketik Teks":
-    soal_teks = st.text_area("Masukkan Soal:", placeholder="Ketik soal atau kalimat di sini...", height=150)
+    soal_teks = st.text_area("Masukkan Soal Bahasa Inggris:", placeholder="Ketik soal atau kalimat di sini...", height=150)
     if st.button("Dapatkan Jawaban ✨"):
         if soal_teks:
             with st.spinner("⚡ NEURAL AI sedang menganalisis & memproses jawaban..."):
-                hasil = generate_with_retry(f"Jawab dan jelaskan soal  {level} ini: {soal_teks}")
+                hasil = generate_with_retry(f"Jawab dan jelaskan soal Bahasa Inggris tingkat {level} ini: {soal_teks}")
                 st.markdown("---")
                 st.success("### 💡 HASIL ANALISIS & JAWABAN:")
                 st.write(hasil)
