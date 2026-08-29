@@ -348,7 +348,6 @@ def generate_with_retry(prompt, image=None):
         
     daftar_kunci = st.secrets["GEMINI_KEYS"]
     
-    # Memastikan format API Keys berupa list
     if isinstance(daftar_kunci, str):
         kunci_acak = [daftar_kunci]
     else:
@@ -359,7 +358,7 @@ def generate_with_retry(prompt, image=None):
         try:
             genai.configure(api_key=kunci)
             
-            # Model resmi rekomendasi Google Gemini terbaru
+           
             model = genai.GenerativeModel('gemini-3.6-flash')
             
             if image:
@@ -370,7 +369,7 @@ def generate_with_retry(prompt, image=None):
             return response.text
             
         except Exception as e:
-            # Jika kuota habis/limit (error 429), ganti ke API Key berikutnya
+           
             if "429" in str(e):
                 continue
             else:
@@ -410,11 +409,11 @@ st.sidebar.markdown("""
 metode = st.radio("Pilih Metode Input Soal:", ["Ketik Teks", "Upload Foto Soal"])
 
 if metode == "Ketik Teks":
-    soal_teks = st.text_area("Masukkan Soal Bahasa Inggris:", placeholder="Ketik soal atau kalimat di sini...", height=150)
+    soal_teks = st.text_area("Masukkan Soal Bahasa:", placeholder="Ketik soal atau kalimat di sini...", height=150)
     if st.button("Dapatkan Jawaban ✨"):
         if soal_teks:
             with st.spinner("⚡ NEURAL AI sedang menganalisis & memproses jawaban..."):
-                hasil = generate_with_retry(f"Jawab dan jelaskan soal Bahasa Inggris tingkat {level} ini: {soal_teks}")
+                hasil = generate_with_retry(f"Jawab dan jelaskan soal tingkat {level} ini: {soal_teks}")
                 st.markdown("---")
                 st.success("### 💡 HASIL ANALISIS & JAWABAN:")
                 st.write(hasil)
@@ -429,7 +428,7 @@ else:
         
         if st.button("Jelaskan Gambar & Jawab ✨"):
             with st.spinner("⚡ NEURAL AI sedang memindai foto & mencari jawaban..."):
-                instruksi = f"Jelaskan secara detail isi gambar ini dan jawab soal Bahasa Inggris tingkat {level} tersebut."
+                instruksi = f"Jelaskan secara detail isi gambar ini dan jawab soal {level} tersebut."
                 hasil = generate_with_retry(instruksi, img)
                 
                 st.markdown("---")
