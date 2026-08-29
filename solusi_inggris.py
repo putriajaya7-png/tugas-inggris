@@ -74,11 +74,11 @@ st.markdown("""
         color: #f1f5f9 !important;
     }
 
-    /* --- REALISTIC FROSTED GLASS HUD CONTAINER (JARAK DAN MARGIN DIPERDAPAT) --- */
+    /* --- REALISTIC FROSTED GLASS HUD CONTAINER --- */
     .hud-title-container {
         text-align: center;
-        padding: 20px 24px;
-        margin: 10px auto 18px auto; /* Margin diperkecil agar tata letak lebih kompak & dekat */
+        padding: 18px 22px;
+        margin: 10px auto 18px auto;
         max-width: 550px;
         
         /* FROSTED GLASS EFFECT */
@@ -152,40 +152,40 @@ st.markdown("""
         z-index: 1;
     }
 
-    /* --- STATUS BADGES & LIVE HUD STATS --- */
+    /* --- STATUS BADGES & LIVE HUD STATS (DIKECILKAN UKURAN KOTAK & TULISANNYA) --- */
     .status-badge {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 4px 14px;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.28);
+        gap: 6px;
+        padding: 3px 10px; /* Dikecilkan padding kotaknya */
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.25);
         backdrop-filter: blur(15px);
         border-radius: 50px;
         color: #f3e8ff;
         font-family: 'Rajdhani', sans-serif;
-        font-size: 0.8rem;
+        font-size: 0.68rem; /* Dikecilkan ukuran font-nya */
         font-weight: 700;
-        letter-spacing: 1.5px;
+        letter-spacing: 1px;
         text-transform: uppercase;
-        box-shadow: 0 0 15px var(--purple-glow), inset 0 1px 2px rgba(255, 255, 255, 0.4);
-        margin-bottom: 6px;
+        box-shadow: 0 0 10px var(--purple-glow), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+        margin-bottom: 4px;
         position: relative;
         z-index: 1;
     }
 
     .status-dot {
-        width: 8px;
-        height: 8px;
+        width: 6px; /* Dikecilkan ukuran titik dot */
+        height: 6px;
         background-color: var(--red-neon);
         border-radius: 50%;
-        box-shadow: 0 0 10px var(--red-neon);
+        box-shadow: 0 0 8px var(--red-neon);
         animation: pulseNeon 1.2s infinite;
     }
 
     @keyframes pulseNeon {
-        0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px var(--red-neon); }
-        50% { opacity: 0.3; transform: scale(1.4); box-shadow: 0 0 18px var(--purple-neon); }
+        0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px var(--red-neon); }
+        50% { opacity: 0.3; transform: scale(1.3); box-shadow: 0 0 14px var(--purple-neon); }
     }
 
     .hud-stats-bar {
@@ -210,7 +210,7 @@ st.markdown("""
         font-weight: bold;
     }
 
-    /* --- LAYOUT SPACING FIXES (JARAK DIREPETKAN & TIDAK TERLALU JAUH) --- */
+    /* --- LAYOUT SPACING FIXES --- */
     .stRadio {
         margin-top: 8px !important;
         margin-bottom: 12px !important;
@@ -348,6 +348,7 @@ def generate_with_retry(prompt, image=None):
         
     daftar_kunci = st.secrets["GEMINI_KEYS"]
     
+    # Memastikan format API Keys berupa list
     if isinstance(daftar_kunci, str):
         kunci_acak = [daftar_kunci]
     else:
@@ -358,7 +359,7 @@ def generate_with_retry(prompt, image=None):
         try:
             genai.configure(api_key=kunci)
             
-           
+            # Model resmi rekomendasi Google Gemini terbaru
             model = genai.GenerativeModel('gemini-3.6-flash')
             
             if image:
@@ -369,7 +370,7 @@ def generate_with_retry(prompt, image=None):
             return response.text
             
         except Exception as e:
-           
+            # Jika kuota habis/limit (error 429), ganti ke API Key berikutnya
             if "429" in str(e):
                 continue
             else:
@@ -409,11 +410,11 @@ st.sidebar.markdown("""
 metode = st.radio("Pilih Metode Input Soal:", ["Ketik Teks", "Upload Foto Soal"])
 
 if metode == "Ketik Teks":
-    soal_teks = st.text_area("Masukkan Soal:", placeholder="Ketik soal atau kalimat di sini...", height=150)
+    soal_teks = st.text_area("Masukkan Soal Bahasa Inggris:", placeholder="Ketik soal atau kalimat di sini...", height=150)
     if st.button("Dapatkan Jawaban ✨"):
         if soal_teks:
             with st.spinner("⚡ NEURAL AI sedang menganalisis & memproses jawaban..."):
-                hasil = generate_with_retry(f"Jawab dan jelaskan soal tingkat {level} ini: {soal_teks}")
+                hasil = generate_with_retry(f"Jawab dan jelaskan soal Bahasa Inggris tingkat {level} ini: {soal_teks}")
                 st.markdown("---")
                 st.success("### 💡 HASIL ANALISIS & JAWABAN:")
                 st.write(hasil)
@@ -428,7 +429,7 @@ else:
         
         if st.button("Jelaskan Gambar & Jawab ✨"):
             with st.spinner("⚡ NEURAL AI sedang memindai foto & mencari jawaban..."):
-                instruksi = f"Jelaskan secara detail isi gambar ini dan jawab soal {level} tersebut."
+                instruksi = f"Jelaskan secara detail isi gambar ini dan jawab soal Bahasa Inggris tingkat {level} tersebut."
                 hasil = generate_with_retry(instruksi, img)
                 
                 st.markdown("---")
