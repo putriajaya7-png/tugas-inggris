@@ -75,69 +75,48 @@ st.markdown("""
         color: #f1f5f9 !important;
     }
 
-    /* --- EXTREME FROSTED GLASS HUD CONTAINER (SUPER GLASSMORPHISM REALISTIS) --- */
+    /* --- FROSTED GLASS HUD CONTAINER (LEBIH RINGKAS & TANPA GARIS POTONG) --- */
     .hud-title-container {
         text-align: center;
-        padding: 20px 24px;
-        margin: 0 auto 28px auto;
-        max-width: 580px;
+        padding: 14px 20px;
+        margin: 0 auto 20px auto;
+        max-width: 480px;
         
-        /* BACKGROUND KACA TEMBUS PANDANG EXTREME */
+        /* BACKGROUND KACA TEMBUS PANDANG PEKAT */
         background: linear-gradient(
             135deg, 
-            rgba(255, 255, 255, 0.12) 0%, 
-            rgba(15, 23, 42, 0.2) 40%, 
+            rgba(255, 255, 255, 0.09) 0%, 
+            rgba(15, 23, 42, 0.25) 40%, 
             rgba(123, 44, 191, 0.08) 100%
         ); 
         
-        /* ULTRA HEAVY BLUR (BLUR KACA FROSTED SUPER TEBAL) */
+        /* ULTRA HEAVY BLUR */
         backdrop-filter: blur(45px) saturate(220%);
         -webkit-backdrop-filter: blur(45px) saturate(220%);
         
-        /* BORDER KILAP SPESULAR KACA SANGAT TAJAM */
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-top: 2px solid rgba(255, 255, 255, 0.45);
-        border-left: 2px solid rgba(255, 255, 255, 0.35);
-        border-right: 1px solid rgba(255, 255, 255, 0.15);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        /* BORDER KILAP SPESULAR KACA HALUS */
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-top: 1.5px solid rgba(255, 255, 255, 0.4);
+        border-left: 1.5px solid rgba(255, 255, 255, 0.3);
+        border-right: 1px solid rgba(255, 255, 255, 0.12);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         
-        /* SUDUT KOTAK MEMBULAT HIGH-TECH */
-        border-radius: 32px;
+        /* SUDUT KOTAK MEMBULAT PROPORSIONAL */
+        border-radius: 24px;
         
         /* KILAUAN DALAM & BAYANGAN LUAR KACA MULTI-LAYER */
         box-shadow: 
-            0 30px 60px rgba(0, 0, 0, 0.75),
-            0 0 35px rgba(255, 0, 85, 0.3),
-            0 0 50px rgba(123, 44, 191, 0.3),
-            inset 0 2px 4px rgba(255, 255, 255, 0.4),
-            inset 0 -2px 6px rgba(0, 0, 0, 0.6),
-            inset 0 0 30px rgba(255, 255, 255, 0.08);
+            0 20px 45px rgba(0, 0, 0, 0.7),
+            0 0 25px rgba(255, 0, 85, 0.25),
+            0 0 35px rgba(123, 44, 191, 0.25),
+            inset 0 1px 3px rgba(255, 255, 255, 0.35),
+            inset 0 -1px 4px rgba(0, 0, 0, 0.5);
             
         position: relative;
         overflow: hidden;
     }
 
-    /* LAPISAN KILAPAN ANGLED GLASS SHEEN (EFEK PANTULAN CAHAYA KACA) */
-    .hud-title-container::before {
-        content: "";
-        position: absolute;
-        top: -50%; left: -50%;
-        width: 200%; height: 200%;
-        background: linear-gradient(
-            45deg,
-            transparent 0%,
-            transparent 42%,
-            rgba(255, 255, 255, 0.15) 48%,
-            rgba(255, 255, 255, 0.28) 50%,
-            rgba(255, 255, 255, 0.15) 52%,
-            transparent 58%,
-            transparent 100%
-        );
-        pointer-events: none;
-        transform: rotate(25deg);
-    }
-
-    /* Laser Scanline Top & Bottom Animation */
+    /* Laser Scanline Bottom Animation */
     .hud-title-container::after {
         content: "";
         position: absolute;
@@ -153,14 +132,14 @@ st.markdown("""
 
     .cyber-glitch-title {
         font-family: 'Orbitron', sans-serif;
-        font-size: 2.2rem;
+        font-size: 1.75rem;
         font-weight: 900;
-        letter-spacing: 3px;
+        letter-spacing: 2.5px;
         background: linear-gradient(135deg, #ffffff 0%, #ff80a0 25%, #d880ff 60%, #ff0055 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        text-shadow: 0 0 30px var(--red-glow), 0 0 45px var(--purple-glow);
-        margin: 6px 0;
+        text-shadow: 0 0 25px var(--red-glow), 0 0 35px var(--purple-glow);
+        margin: 4px 0;
         text-transform: uppercase;
         position: relative;
         z-index: 1;
@@ -169,8 +148,8 @@ st.markdown("""
     .cyber-sub {
         font-family: 'JetBrains Mono', monospace;
         color: #cbd5e1;
-        font-size: 0.85rem;
-        letter-spacing: 1.5px;
+        font-size: 0.78rem;
+        letter-spacing: 1.2px;
         text-transform: uppercase;
         position: relative;
         z-index: 1;
@@ -180,46 +159,46 @@ st.markdown("""
     .status-badge {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        padding: 6px 18px;
+        gap: 8px;
+        padding: 4px 14px;
         background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.22);
         backdrop-filter: blur(15px);
         border-radius: 50px;
         color: #f3e8ff;
         font-family: 'Rajdhani', sans-serif;
-        font-size: 0.88rem;
+        font-size: 0.8rem;
         font-weight: 700;
-        letter-spacing: 2px;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
-        box-shadow: 0 0 20px var(--purple-glow), inset 0 1px 2px rgba(255, 255, 255, 0.3);
-        margin-bottom: 8px;
+        box-shadow: 0 0 15px var(--purple-glow), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+        margin-bottom: 6px;
         position: relative;
         z-index: 1;
     }
 
     .status-dot {
-        width: 9px;
-        height: 9px;
+        width: 8px;
+        height: 8px;
         background-color: var(--red-neon);
         border-radius: 50%;
-        box-shadow: 0 0 12px var(--red-neon);
+        box-shadow: 0 0 10px var(--red-neon);
         animation: pulseNeon 1.2s infinite;
     }
 
     @keyframes pulseNeon {
-        0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 12px var(--red-neon); }
-        50% { opacity: 0.3; transform: scale(1.4); box-shadow: 0 0 22px var(--purple-neon); }
+        0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px var(--red-neon); }
+        50% { opacity: 0.3; transform: scale(1.4); box-shadow: 0 0 18px var(--purple-neon); }
     }
 
     .hud-stats-bar {
         display: flex;
         justify-content: space-around;
-        margin-top: 15px;
-        padding-top: 12px;
+        margin-top: 10px;
+        padding-top: 10px;
         border-top: 1px solid rgba(255, 255, 255, 0.12);
         font-family: 'JetBrains Mono', monospace;
-        font-size: 0.72rem;
+        font-size: 0.68rem;
         color: #a7f3d0;
         position: relative;
         z-index: 1;
