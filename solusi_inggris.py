@@ -3,9 +3,8 @@ import google.generativeai as genai
 from PIL import Image
 import random
 
-# --- KONFIGURASI HALAMAN UTAMA ---
 st.set_page_config(
-    page_title="NEURAL ENGLISH AI - ULTRA CYBER EDITION",
+    page_title="NEURAL ENGLISH AI - HYPER CYBER EDITION",
     page_icon="⚡",
     layout="centered",
     initial_sidebar_state="expanded"
@@ -13,82 +12,103 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    /* --- IMPORT GOOGLE FONTS --- */
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+    /* --- IMPORT GOOGLE FONTS FUTURISTIK --- */
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@500;600;700&display=swap');
 
-    /* --- ROOT VARIABLES --- */
+    /* --- ROOT PALETTE VARIABLES (MERAH + NAVI + UNGU + HITAM) --- */
     :root {
-        --bg-obsidian: #03050b;
-        --navy-dark: #070e1e;
-        --navy-accent: #0f1c3f;
-        --crimson-neon: #ff003c;
-        --crimson-glow: rgba(255, 0, 60, 0.5);
-        --crimson-dark: #990024;
-        --text-bright: #ffffff;
+        --bg-black: #020208;
+        --bg-navy-dark: #060b1e;
+        --navy-accent: #0f172a;
+        --purple-core: #7b2cbf;
+        --purple-neon: #9d4edd;
+        --purple-glow: rgba(157, 78, 221, 0.45);
+        --red-crimson: #ff0055;
+        --red-neon: #ff003c;
+        --red-glow: rgba(255, 0, 60, 0.55);
+        --text-pure: #ffffff;
         --text-dim: #94a3b8;
-        --glass-border: rgba(255, 0, 60, 0.3);
+        --glass-bg: rgba(6, 11, 30, 0.75);
+        --glass-border: linear-gradient(135deg, rgba(255,0,85,0.6), rgba(157,78,221,0.6));
     }
 
-    /* --- GLOBAL BACKGROUND & ANIMATED MESH --- */
+    /* --- GLOBAL ANIMATED BACKGROUND --- */
     html, body, [data-testid="stAppViewContainer"] {
         font-family: 'Plus Jakarta Sans', sans-serif !important;
-        background: radial-gradient(circle at 50% 10%, #150008 0%, #060a17 45%, #020408 100%) !important;
-        color: var(--text-bright) !important;
+        background: radial-gradient(circle at 50% 0%, #20002c 0%, #0c0019 30%, #060b1e 60%, #020208 100%) !important;
+        color: var(--text-pure) !important;
         overflow-x: hidden;
     }
 
-    /* Animated Grid Scanline Background */
+    /* --- CYBER GRID & NEON MESH OVERLAY --- */
     [data-testid="stAppViewContainer"]::before {
         content: "";
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
         background-image: 
-            linear-gradient(rgba(255, 0, 60, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(15, 28, 63, 0.15) 1px, transparent 1px);
-        background-size: 40px 40px;
+            linear-gradient(rgba(255, 0, 85, 0.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(157, 78, 221, 0.06) 1px, transparent 1px),
+            radial-gradient(circle at 20% 30%, rgba(255, 0, 60, 0.15) 0%, transparent 40%),
+            radial-gradient(circle at 80% 70%, rgba(123, 44, 191, 0.2) 0%, transparent 40%);
+        background-size: 36px 36px, 36px 36px, 100% 100%, 100% 100%;
         pointer-events: none;
         z-index: 0;
-        animation: gridPulse 8s ease-in-out infinite alternate;
+        animation: gridPulse 10s ease-in-out infinite alternate;
     }
 
     @keyframes gridPulse {
-        0% { opacity: 0.6; background-size: 38px 38px; }
-        100% { opacity: 1; background-size: 42px 42px; }
+        0% { opacity: 0.7; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.01); }
+        100% { opacity: 0.8; transform: scale(1); }
     }
 
-    /* --- SIDEBAR GLASSMORPHISM STYLING --- */
+    /* --- SIDEBAR GLASSMORPHISM ULTRA --- */
     [data-testid="stSidebar"] {
-        background: rgba(7, 14, 30, 0.92) !important;
-        backdrop-filter: blur(25px) saturate(200%);
-        -webkit-backdrop-filter: blur(25px) saturate(200%);
-        border-right: 1px solid var(--crimson-neon) !important;
-        box-shadow: 10px 0 35px rgba(255, 0, 60, 0.15);
+        background: rgba(6, 11, 30, 0.88) !important;
+        backdrop-filter: blur(30px) saturate(220%);
+        -webkit-backdrop-filter: blur(30px) saturate(220%);
+        border-right: 1px solid rgba(157, 78, 221, 0.3) !important;
+        box-shadow: 8px 0 35px rgba(255, 0, 85, 0.2), 15px 0 50px rgba(123, 44, 191, 0.2);
     }
 
     [data-testid="stSidebar"] * {
         color: #f1f5f9 !important;
     }
 
-    /* --- CYBER HEADER HUD --- */
+    /* --- CYBER HEADER HUD CONTAINER --- */
     .hud-title-container {
         text-align: center;
-        padding: 25px 15px;
-        margin-bottom: 30px;
-        background: rgba(7, 14, 30, 0.7);
-        border: 1px solid var(--crimson-neon);
-        border-radius: 20px;
-        backdrop-filter: blur(15px);
-        box-shadow: 0 0 30px rgba(255, 0, 60, 0.2), inset 0 0 15px rgba(255, 0, 60, 0.1);
+        padding: 28px 20px;
+        margin-bottom: 32px;
+        background: linear-gradient(135deg, rgba(12, 0, 25, 0.85) 0%, rgba(6, 11, 30, 0.9) 50%, rgba(25, 0, 15, 0.85) 100%);
+        border: 1px solid transparent;
+        border-image: linear-gradient(135deg, var(--red-crimson), var(--purple-neon), var(--red-neon)) 1;
+        border-radius: 22px;
+        backdrop-filter: blur(20px);
+        box-shadow: 
+            0 10px 40px rgba(0, 0, 0, 0.8),
+            0 0 30px var(--red-glow),
+            0 0 50px var(--purple-glow),
+            inset 0 0 20px rgba(157, 78, 221, 0.15);
         position: relative;
         overflow: hidden;
+    }
+
+    /* Laser Scanline Top & Bottom Animation */
+    .hud-title-container::before {
+        content: "";
+        position: absolute;
+        top: 0; left: -100%; width: 100%; height: 3px;
+        background: linear-gradient(90deg, transparent, var(--red-neon), var(--purple-neon), transparent);
+        animation: scanline 3.5s linear infinite;
     }
 
     .hud-title-container::after {
         content: "";
         position: absolute;
-        top: 0; left: -100%; width: 100%; height: 2px;
-        background: linear-gradient(90deg, transparent, var(--crimson-neon), transparent);
-        animation: scanline 3s linear infinite;
+        bottom: 0; right: -100%; width: 100%; height: 2px;
+        background: linear-gradient(90deg, transparent, var(--purple-neon), var(--red-crimson), transparent);
+        animation: scanlineReverse 3.5s linear infinite;
     }
 
     @keyframes scanline {
@@ -96,124 +116,152 @@ st.markdown("""
         100% { left: 100%; }
     }
 
+    @keyframes scanlineReverse {
+        0% { right: -100%; }
+        100% { right: 100%; }
+    }
+
     .cyber-glitch-title {
-        font-family: 'Orbitron', sans-serif !alignment;
-        font-size: 2.6rem;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2.7rem;
         font-weight: 900;
-        letter-spacing: 2px;
-        background: linear-gradient(135deg, #ffffff 10%, #ff6b8b 50%, var(--crimson-neon) 100%);
+        letter-spacing: 3px;
+        background: linear-gradient(135deg, #ffffff 0%, #ff80a0 25%, #d880ff 60%, #ff0055 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        text-shadow: 0 0 25px var(--crimson-glow);
-        margin: 5px 0;
+        text-shadow: 0 0 30px var(--red-glow), 0 0 45px var(--purple-glow);
+        margin: 8px 0;
         text-transform: uppercase;
     }
 
     .cyber-sub {
         font-family: 'JetBrains Mono', monospace;
-        color: #94a3b8;
-        font-size: 0.88rem;
-        letter-spacing: 1px;
+        color: #cbd5e1;
+        font-size: 0.85rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
     }
 
-    /* --- BADGES & STATUS PILLS --- */
+    /* --- STATUS BADGES & LIVE HUD STATS --- */
     .status-badge {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 6px 16px;
-        background: rgba(255, 0, 60, 0.1);
-        border: 1px solid var(--crimson-neon);
+        gap: 10px;
+        padding: 6px 18px;
+        background: linear-gradient(90deg, rgba(255, 0, 85, 0.15), rgba(123, 44, 191, 0.2));
+        border: 1px solid var(--purple-neon);
         border-radius: 50px;
-        color: #ff809b;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.75rem;
+        color: #f3e8ff;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 0.88rem;
         font-weight: 700;
-        letter-spacing: 1.5px;
+        letter-spacing: 2px;
         text-transform: uppercase;
-        box-shadow: 0 0 15px var(--crimson-glow);
-        margin-bottom: 10px;
+        box-shadow: 0 0 20px var(--purple-glow);
+        margin-bottom: 8px;
     }
 
     .status-dot {
-        width: 8px;
-        height: 8px;
-        background-color: var(--crimson-neon);
+        width: 9px;
+        height: 9px;
+        background-color: var(--red-neon);
         border-radius: 50%;
-        box-shadow: 0 0 10px var(--crimson-neon);
-        animation: pulse 1.5s infinite;
+        box-shadow: 0 0 12px var(--red-neon);
+        animation: pulseNeon 1.2s infinite;
     }
 
-    @keyframes pulse {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.4; transform: scale(1.3); }
+    @keyframes pulseNeon {
+        0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 12px var(--red-neon); }
+        50% { opacity: 0.3; transform: scale(1.4); box-shadow: 0 0 22px var(--purple-neon); }
+    }
+
+    .hud-stats-bar {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 15px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(157, 78, 221, 0.2);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        color: #a7f3d0;
+    }
+
+    .hud-stat-item {
+        color: #94a3b8;
+    }
+
+    .hud-stat-val {
+        color: #ff0055;
+        font-weight: bold;
     }
 
     /* --- INPUT CONTROLS (TEXT AREA & INPUTS) --- */
     .stTextArea textarea, .stTextInput input {
-        background: rgba(7, 14, 30, 0.85) !important;
-        border: 1px solid rgba(255, 0, 60, 0.35) !important;
+        background: rgba(6, 11, 30, 0.88) !important;
+        border: 1px solid rgba(157, 78, 221, 0.4) !important;
         color: #ffffff !important;
-        border-radius: 14px !important;
+        border-radius: 16px !important;
         font-family: 'Plus Jakarta Sans', sans-serif !important;
         font-size: 1rem !important;
-        padding: 16px !important;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        padding: 18px !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(123, 44, 191, 0.1);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
 
     .stTextArea textarea:focus, .stTextInput input:focus {
-        border-color: var(--crimson-neon) !important;
-        box-shadow: 0 0 25px var(--crimson-glow), inset 0 0 10px rgba(255, 0, 60, 0.2) !important;
-        background: rgba(10, 20, 45, 0.95) !important;
+        border-color: var(--red-neon) !important;
+        box-shadow: 0 0 30px var(--red-glow), 0 0 20px var(--purple-glow), inset 0 0 15px rgba(255, 0, 60, 0.2) !important;
+        background: rgba(12, 0, 25, 0.95) !important;
     }
 
-    /* --- SELECTBOX & DROPDOWN STYLING --- */
+    /* --- SELECTBOX & RADIO STYLING --- */
     div[data-baseweb="select"] > div {
-        background-color: rgba(7, 14, 30, 0.9) !important;
-        border: 1px solid rgba(255, 0, 60, 0.4) !important;
-        border-radius: 12px !important;
+        background: rgba(6, 11, 30, 0.92) !important;
+        border: 1px solid rgba(255, 0, 85, 0.4) !important;
+        border-radius: 14px !important;
         color: #ffffff !important;
         transition: all 0.3s ease;
     }
 
     div[data-baseweb="select"]:hover > div {
-        border-color: var(--crimson-neon) !important;
-        box-shadow: 0 0 20px var(--crimson-glow);
+        border-color: var(--purple-neon) !important;
+        box-shadow: 0 0 25px var(--purple-glow);
     }
 
     .stRadio label {
-        font-family: 'JetBrains Mono', monospace !important;
+        font-family: 'Orbitron', sans-serif !important;
         color: #e2e8f0 !important;
         font-weight: 600 !important;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
     }
 
-    /* --- HIGH-TECH CYBER BUTTON --- */
+    /* --- ULTRA HIGH-TECH CYBER BUTTON --- */
     .stButton > button {
         width: 100%;
-        background: linear-gradient(135deg, #ff003c 0%, #b3002a 50%, #0f1c3f 100%) !important;
+        background: linear-gradient(135deg, #ff0055 0%, #9d4edd 50%, #060b1e 100%) !important;
+        background-size: 200% 200% !important;
         color: #ffffff !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
-        padding: 16px 30px !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        padding: 18px 32px !important;
         font-family: 'Orbitron', sans-serif !important;
-        font-size: 1.05rem !important;
-        font-weight: 700 !important;
-        border-radius: 14px !important;
-        letter-spacing: 1.5px;
+        font-size: 1.1rem !important;
+        font-weight: 800 !important;
+        border-radius: 16px !important;
+        letter-spacing: 2px;
         text-transform: uppercase;
-        box-shadow: 0 4px 30px var(--crimson-glow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 6px 35px var(--red-glow), 0 0 30px var(--purple-glow);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
         cursor: pointer;
         position: relative;
         overflow: hidden;
     }
 
     .stButton > button:hover {
-        transform: translateY(-3px) scale(1.01);
-        box-shadow: 0 10px 45px var(--crimson-neon), 0 0 20px rgba(15, 28, 63, 0.8) !important;
+        background-position: right center !important;
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 12px 50px var(--red-neon), 0 0 40px var(--purple-neon) !important;
         border-color: #ffffff !important;
-        background: linear-gradient(135deg, #ff1e56 0%, #ff003c 50%, #1e3a8a 100%) !important;
     }
 
     .stButton > button:active {
@@ -222,37 +270,37 @@ st.markdown("""
 
     /* --- RESPONSE HUD DISPLAY CARD --- */
     .stSuccess {
-        background: rgba(7, 14, 30, 0.95) !important;
-        border: 1px solid var(--crimson-neon) !important;
-        border-left: 6px solid var(--crimson-neon) !important;
+        background: linear-gradient(135deg, rgba(12, 0, 25, 0.95) 0%, rgba(6, 11, 30, 0.95) 100%) !important;
+        border: 1px solid var(--purple-neon) !important;
+        border-left: 6px solid var(--red-neon) !important;
         color: #f8fafc !important;
-        border-radius: 16px !important;
-        backdrop-filter: blur(20px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 20px var(--crimson-glow);
-        padding: 24px !important;
+        border-radius: 18px !important;
+        backdrop-filter: blur(25px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px var(--red-glow), 0 0 25px var(--purple-glow);
+        padding: 28px !important;
     }
 
     .stWarning {
-        background: rgba(15, 28, 63, 0.9) !important;
-        border: 1px solid rgba(245, 158, 11, 0.6) !important;
-        border-left: 6px solid #f59e0b !important;
-        color: #fef3c7 !important;
+        background: rgba(20, 5, 25, 0.9) !important;
+        border: 1px solid rgba(255, 0, 85, 0.6) !important;
+        border-left: 6px solid var(--red-neon) !important;
+        color: #ffe4e6 !important;
         border-radius: 14px !important;
     }
 
     /* FILE UPLOADER CYBER BOX */
     [data-testid="stFileUploader"] {
-        background: rgba(7, 14, 30, 0.7) !important;
-        border: 2px dashed rgba(255, 0, 60, 0.4) !important;
-        border-radius: 18px !important;
-        padding: 20px !important;
+        background: rgba(6, 11, 30, 0.75) !important;
+        border: 2px dashed rgba(157, 78, 221, 0.5) !important;
+        border-radius: 20px !important;
+        padding: 24px !important;
         transition: all 0.3s ease;
     }
     
     [data-testid="stFileUploader"]:hover {
-        border-color: var(--crimson-neon) !important;
-        background: rgba(10, 20, 45, 0.9) !important;
-        box-shadow: 0 0 25px var(--crimson-glow);
+        border-color: var(--red-neon) !important;
+        background: rgba(15, 5, 30, 0.9) !important;
+        box-shadow: 0 0 35px var(--red-glow), 0 0 25px var(--purple-glow);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -267,7 +315,6 @@ def generate_with_retry(prompt, image=None):
         
     daftar_kunci = st.secrets["GEMINI_KEYS"]
     
-    # Memastikan format API Keys berupa list
     if isinstance(daftar_kunci, str):
         kunci_acak = [daftar_kunci]
     else:
@@ -278,7 +325,7 @@ def generate_with_retry(prompt, image=None):
         try:
             genai.configure(api_key=kunci)
             
-            # Model resmi rekomendasi Google Gemini terbaru
+            
             model = genai.GenerativeModel('gemini-3.6-flash')
             
             if image:
@@ -289,7 +336,7 @@ def generate_with_retry(prompt, image=None):
             return response.text
             
         except Exception as e:
-            # Jika kuota habis/limit (error 429), ganti ke API Key berikutnya
+            
             if "429" in str(e):
                 continue
             else:
@@ -297,35 +344,39 @@ def generate_with_retry(prompt, image=None):
     
     return "❌ Waduh, semua API Key sedang limit! Coba lagi dalam 1 menit ya."
 
-# --- HEADER HUD LAYOUT ---
+
 st.markdown("""
 <div class="hud-title-container">
     <div class="status-badge">
-        <span class="status-dot"></span> NEURAL ENGINE 3.6 FLASH ONLINE
+        <span class="status-dot"></span> NEURAL ENGINE 3.6 FLASH • QUANTUM ACTIVE
     </div>
     <div class="cyber-glitch-title">ENGLISH EXPERT AI</div>
-    <div class="cyber-sub">SOLUSI CERDAS & ANALISIS TUGAS BAHASA INGGRIS FUTURISTIK</div>
+    <div class="cyber-sub">SOLUSI CERDAS & ANALISIS TUGAS</div>
+    <div class="hud-stats-bar">
+        <span class="hud-stat-item">PALETTE: <span class="hud-stat-val">RED • NAVY • PURPLE • OBSIDIAN</span></span>
+        <span class="hud-stat-item">LATENCY: <span class="hud-stat-val">&lt; 1.2s</span></span>
+        <span class="hud-stat-item">STATUS: <span class="hud-stat-val">ONLINE ⚡</span></span>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
-# --- SIDEBAR STYLING & CONFIG ---
 st.sidebar.markdown("### 🎛️ AI CONTROL CENTER")
 level = st.sidebar.selectbox("Pilih Jenjang Sekolah:", ["SD", "SMP", "SMA", "Kuliah"])
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
-<div style="background: rgba(255,0,60,0.05); padding: 12px; border-radius: 10px; border: 1px solid rgba(255,0,60,0.2);">
-    <small style="color: #94a3b8; font-family: 'JetBrains Mono', monospace;">
-        <b>THEME:</b> CYBER CRIMSON & NAVY<br>
-        <b>ENGINE:</b> GEMINI MULTI-KEY ROTATION<br>
-        <b>SECURITY:</b> ENCRYPTED SESSION
+<div style="background: linear-gradient(135deg, rgba(255,0,85,0.1) 0%, rgba(123,44,191,0.15) 100%); padding: 16px; border-radius: 14px; border: 1px solid rgba(157,78,221,0.4); box-shadow: 0 0 20px rgba(123,44,191,0.2);">
+    <small style="color: #cbd5e1; font-family: 'JetBrains Mono', monospace; line-height: 1.6;">
+        <b style="color: #ff0055;">PALETTE:</b> MERAH, NAVI, UNGU, HITAM<br>
+        <b style="color: #9d4edd;">ENGINE:</b> GEMINI MULTI-KEY ROTATION<br>
+        <b style="color: #38bdf8;">SECURITY:</b> ENCRYPTED NEURAL SESSION
     </small>
 </div>
 """, unsafe_allow_html=True)
 
 metode = st.radio("Pilih Metode Input Soal:", ["Ketik Teks", "Upload Foto Soal"])
 
-# --- LOGIKA JAWABAN & INTERAKSI USER ---
+
 if metode == "Ketik Teks":
     soal_teks = st.text_area("Masukkan Soal Bahasa Inggris:", placeholder="Ketik soal atau kalimat di sini...", height=150)
     if st.button("Dapatkan Jawaban ✨"):
