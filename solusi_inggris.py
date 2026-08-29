@@ -74,14 +74,14 @@ st.markdown("""
         color: #f1f5f9 !important;
     }
 
-    /* --- REALISTIC FROSTED GLASS HUD CONTAINER (SEDIKIT DIBESARKAN & JARAK DIRENGGANGKAN) --- */
+    /* --- REALISTIC FROSTED GLASS HUD CONTAINER (JARAK DAN MARGIN DIPERDAPAT) --- */
     .hud-title-container {
         text-align: center;
-        padding: 22px 28px;
-        margin: 15px auto 40px auto; /* Memberikan ruang napas vertikal agar tidak rapat */
-        max-width: 550px; /* Ukuran pas sedikit lebih besar dari sebelumnya */
+        padding: 20px 24px;
+        margin: 10px auto 18px auto; /* Margin diperkecil agar tata letak lebih kompak & dekat */
+        max-width: 550px;
         
-        /* ULTRA REALISTIC FROSTED GLASS EFFECT */
+        /* FROSTED GLASS EFFECT */
         background: linear-gradient(
             135deg, 
             rgba(255, 255, 255, 0.14) 0%, 
@@ -93,21 +93,19 @@ st.markdown("""
         backdrop-filter: blur(40px) saturate(230%);
         -webkit-backdrop-filter: blur(40px) saturate(230%);
         
-        /* REAL GLASS SPECULAR HIGHLIGHT BORDERS (TEPI KACA KILAP) */
+        /* GLASS SPECULAR HIGHLIGHT BORDERS */
         border: 1px solid rgba(255, 255, 255, 0.22);
         border-top: 1.8px solid rgba(255, 255, 255, 0.55);
         border-left: 1.8px solid rgba(255, 255, 255, 0.4);
         border-right: 1px solid rgba(255, 255, 255, 0.15);
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         
-        /* SMOOTH ROUNDED CORNERS */
-        border-radius: 28px;
+        border-radius: 26px;
         
-        /* MULTI-LAYER SHADOW & INSET GLASS GLOW */
         box-shadow: 
-            0 25px 55px rgba(0, 0, 0, 0.75),
-            0 0 30px rgba(255, 0, 85, 0.2),
-            0 0 40px rgba(123, 44, 191, 0.25),
+            0 20px 45px rgba(0, 0, 0, 0.75),
+            0 0 25px rgba(255, 0, 85, 0.2),
+            0 0 35px rgba(123, 44, 191, 0.25),
             inset 0 1px 2px rgba(255, 255, 255, 0.5),
             inset 0 -2px 6px rgba(0, 0, 0, 0.6);
             
@@ -131,14 +129,14 @@ st.markdown("""
 
     .cyber-glitch-title {
         font-family: 'Orbitron', sans-serif;
-        font-size: 1.95rem;
+        font-size: 1.9rem;
         font-weight: 900;
         letter-spacing: 3px;
         background: linear-gradient(135deg, #ffffff 0%, #ff80a0 25%, #d880ff 60%, #ff0055 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-shadow: 0 0 25px var(--red-glow), 0 0 35px var(--purple-glow);
-        margin: 6px 0;
+        margin: 4px 0;
         text-transform: uppercase;
         position: relative;
         z-index: 1;
@@ -147,7 +145,7 @@ st.markdown("""
     .cyber-sub {
         font-family: 'JetBrains Mono', monospace;
         color: #cbd5e1;
-        font-size: 0.82rem;
+        font-size: 0.8rem;
         letter-spacing: 1.4px;
         text-transform: uppercase;
         position: relative;
@@ -159,19 +157,19 @@ st.markdown("""
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 5px 16px;
+        padding: 4px 14px;
         background: rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.28);
         backdrop-filter: blur(15px);
         border-radius: 50px;
         color: #f3e8ff;
         font-family: 'Rajdhani', sans-serif;
-        font-size: 0.82rem;
+        font-size: 0.8rem;
         font-weight: 700;
         letter-spacing: 1.5px;
         text-transform: uppercase;
         box-shadow: 0 0 15px var(--purple-glow), inset 0 1px 2px rgba(255, 255, 255, 0.4);
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         position: relative;
         z-index: 1;
     }
@@ -193,11 +191,11 @@ st.markdown("""
     .hud-stats-bar {
         display: flex;
         justify-content: space-around;
-        margin-top: 14px;
-        padding-top: 12px;
+        margin-top: 10px;
+        padding-top: 10px;
         border-top: 1px solid rgba(255, 255, 255, 0.15);
         font-family: 'JetBrains Mono', monospace;
-        font-size: 0.72rem;
+        font-size: 0.7rem;
         color: #a7f3d0;
         position: relative;
         z-index: 1;
@@ -212,15 +210,15 @@ st.markdown("""
         font-weight: bold;
     }
 
-    /* --- LAYOUT SPACING & MARGIN FIXES (MENGATASI KONDISI TERLALU DEKAT) --- */
+    /* --- LAYOUT SPACING FIXES (JARAK DIREPETKAN & TIDAK TERLALU JAUH) --- */
     .stRadio {
-        margin-top: 15px !important;
-        margin-bottom: 25px !important;
+        margin-top: 8px !important;
+        margin-bottom: 12px !important;
     }
 
     .stTextArea, [data-testid="stFileUploader"] {
-        margin-top: 15px !important;
-        margin-bottom: 30px !important;
+        margin-top: 6px !important;
+        margin-bottom: 14px !important;
     }
 
     /* --- INPUT CONTROLS (TEXT AREA & INPUTS) --- */
@@ -231,7 +229,7 @@ st.markdown("""
         border-radius: 16px !important;
         font-family: 'Plus Jakarta Sans', sans-serif !important;
         font-size: 1rem !important;
-        padding: 18px !important;
+        padding: 16px !important;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(123, 44, 191, 0.1);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
@@ -260,14 +258,14 @@ st.markdown("""
         font-family: 'Orbitron', sans-serif !important;
         color: #e2e8f0 !important;
         font-weight: 600 !important;
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         letter-spacing: 1px;
     }
 
     /* --- ULTRA HIGH-TECH CYBER BUTTON --- */
     .stButton {
-        margin-top: 20px !important;
-        margin-bottom: 25px !important;
+        margin-top: 10px !important;
+        margin-bottom: 16px !important;
     }
 
     .stButton > button {
@@ -276,9 +274,9 @@ st.markdown("""
         background-size: 200% 200% !important;
         color: #ffffff !important;
         border: 1px solid rgba(255, 255, 255, 0.4) !important;
-        padding: 18px 32px !important;
+        padding: 16px 28px !important;
         font-family: 'Orbitron', sans-serif !important;
-        font-size: 1.1rem !important;
+        font-size: 1.05rem !important;
         font-weight: 800 !important;
         border-radius: 16px !important;
         letter-spacing: 2px;
@@ -292,13 +290,13 @@ st.markdown("""
 
     .stButton > button:hover {
         background-position: right center !important;
-        transform: translateY(-3px) scale(1.02);
+        transform: translateY(-2px) scale(1.01);
         box-shadow: 0 12px 50px var(--red-neon), 0 0 40px var(--purple-neon) !important;
         border-color: #ffffff !important;
     }
 
     .stButton > button:active {
-        transform: translateY(-1px);
+        transform: translateY(0);
     }
 
     /* --- RESPONSE HUD DISPLAY CARD --- */
@@ -310,8 +308,8 @@ st.markdown("""
         border-radius: 18px !important;
         backdrop-filter: blur(25px);
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px var(--red-glow), 0 0 25px var(--purple-glow);
-        padding: 28px !important;
-        margin-top: 25px !important;
+        padding: 24px !important;
+        margin-top: 15px !important;
     }
 
     .stWarning {
@@ -320,15 +318,15 @@ st.markdown("""
         border-left: 6px solid var(--red-neon) !important;
         color: #ffe4e6 !important;
         border-radius: 14px !important;
-        margin-top: 20px !important;
+        margin-top: 12px !important;
     }
 
     /* FILE UPLOADER CYBER BOX */
     [data-testid="stFileUploader"] {
         background: rgba(6, 11, 30, 0.75) !important;
         border: 2px dashed rgba(157, 78, 221, 0.5) !important;
-        border-radius: 20px !important;
-        padding: 24px !important;
+        border-radius: 18px !important;
+        padding: 20px !important;
         transition: all 0.3s ease;
     }
     
@@ -411,7 +409,6 @@ st.sidebar.markdown("""
 
 metode = st.radio("Pilih Metode Input Soal:", ["Ketik Teks", "Upload Foto Soal"])
 
-# --- LOGIKA JAWABAN & INTERAKSI USER ---
 if metode == "Ketik Teks":
     soal_teks = st.text_area("Masukkan Soal Bahasa Inggris:", placeholder="Ketik soal atau kalimat di sini...", height=150)
     if st.button("Dapatkan Jawaban ✨"):
