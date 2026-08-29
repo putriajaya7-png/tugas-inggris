@@ -76,21 +76,35 @@ st.markdown("""
         color: #f1f5f9 !important;
     }
 
-    /* --- CYBER HEADER HUD CONTAINER --- */
+    /* --- CYBER HEADER HUD CONTAINER (EFEK KACA / GLASSMORPHISM) --- */
     .hud-title-container {
         text-align: center;
         padding: 16px 20px;
         margin: 0 auto 24px auto;
         max-width: 580px;
-        background: linear-gradient(135deg, rgba(12, 0, 25, 0.85) 0%, rgba(6, 11, 30, 0.9) 50%, rgba(25, 0, 15, 0.85) 100%);
-        border: 1.5px solid rgba(255, 0, 85, 0.5);
+        
+        /* EFEK KACA UTAMA: Transparan namun membias */
+        background: rgba(15, 23, 42, 0.25); 
+        
+        /* EFEK BLUR KACA: Sangat kuat */
+        backdrop-filter: blur(28px) saturate(180%);
+        -webkit-backdrop-filter: blur(28px) saturate(180%);
+        
+        /* BORDER PANTULAN CAHAYA: Putih transparan di atas dan kiri seperti kaca asli */
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-top: 1.5px solid rgba(255, 255, 255, 0.25);
+        border-left: 1.5px solid rgba(255, 255, 255, 0.25);
+        
+        /* BENTUK KOTAK: Membulat (Rounded) */
         border-radius: 32px;
-        backdrop-filter: blur(20px);
+        
+        /* BAYANGAN (SHADOW): Hitam pekat di bawah, glow cyber di luar, pantulan kaca di dalam */
         box-shadow: 
-            0 10px 40px rgba(0, 0, 0, 0.8),
-            0 0 30px var(--red-glow),
-            0 0 50px var(--purple-glow),
-            inset 0 0 20px rgba(157, 78, 221, 0.15);
+            0 25px 45px rgba(0, 0, 0, 0.6),
+            0 0 30px rgba(255, 0, 85, 0.25),
+            0 0 45px rgba(123, 44, 191, 0.25),
+            inset 0 0 20px rgba(255, 255, 255, 0.05);
+            
         position: relative;
         overflow: hidden;
     }
