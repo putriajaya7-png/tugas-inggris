@@ -360,7 +360,7 @@ def generate_with_retry(prompt, image=None):
             genai.configure(api_key=kunci)
             
             # Model resmi rekomendasi Google Gemini terbaru
-            model = genai.GenerativeModel('gemini-3.6-flash')
+            model = genai.GenerativeModel('gemini-1.5-flash')
             
             if image:
                 response = model.generate_content([prompt, image])
